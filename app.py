@@ -1,0 +1,319 @@
+"""
+Hockey Matchup: news, lineups, and betting odds comparison.
+Pick a game, see who's healthy, recent news, and how odds compare to the narrative.
+"""
+from datetime import date, datetime, timedelta
+
+import streamlit as st
+
+from analysis import (
+    build_comparison_summary,
+    get_best_bet_and_confidence,
+)
+from news_client import NewsItem, fetch_nhl_news, filter_news_for_matchup
+from nhl_client import (
+    Game,
+    get_rest_context,
+    get_rosters_for_matchup,
+    get_schedule,
+    get_team_pp_pk,
+)
+from odds_client import fetch_nhl_odds, match_odds_to_game
+
+st.set_page_config(
+    page_title="Hockey Matchup | News vs Odds",
+    page_icon="🏒",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+# Light styling: hockey feel without being loud
+st.markdown("""
+<style>
+    .stApp { background: linear-gradient(180deg, #0e1117 0%, #1a1d24 100%); }
+    h1 { color: #e0e0e0; font-weight: 700; }
+    h2, h3 { color: #b0b0b0; }
+    .matchup-card {
+        background: #262730;
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin: 0.5rem 0;
+        border-left: 4px solid #4a9eff;
+    }
+    .insight-favor-home { border-left-color: #4caf50; }
+    .insight-favor-away { border-left-color: #ff9800; }
+    .insight-caution { border-left-color: #f44336; }
+    .news-item { background: #1e2128; border-radius: 8px; padding: 0.75rem 1rem; margin: 0.4rem 0; }
+    div[data-testid="stMetric"] { background: #262730; padding: 0.5rem 1rem; border-radius: 8px; }
+</style>
+""", unsafe_allow_html=True)
+
+
+def _parse_game_date(game_date: str) -> date:
+    """Parse YYYY-MM-DD to date."""
+    try:
+        return datetime.strptime(game_date, "%Y-%m-%d").date()
+    except (ValueError, TypeError):
+        return date.today()
+
+
+def render_sidebar() -> tuple[date, list[Game], Game | None]:
+    """Date picker and game selector. Returns (selected_date, all_games_that_day, selected_game)."""
+    st.sidebar.header("🏒 Select matchup")
+    st.sidebar.caption("Odds API key (optional)")
+    odds_key = st.sidebar.text_input(
+        "Odds API key",
+        value=st.session_state.get("odds_api_key", ""),
+        type="password",
+        placeholder="Paste key from the-odds-api.com",
+        label_visibility="collapsed",
+    )
+    if odds_key is not None and odds_key.strip():
+        st.session_state["odds_api_key"] = odds_key.strip()
+    elif odds_key is not None and not odds_key.strip() and "odds_api_key" in st.session_state:
+        del st.session_state["odds_api_key"]
+    today = date.today()
+    sel_date = st.sidebar.date_input(
+        "Game date",
+        value=today,
+        min_value=today - timedelta(days=7),
+        max_value=today + timedelta(days=14),
+    )
+    games = get_schedule(start_date=sel_date, end_date=sel_date)
+    if not games:
+        st.sidebar.info("No games scheduled for this date.")
+        return sel_date, [], None
+    options = [
+        f"{g.away_team.name} @ {g.home_team.name} — {g.state}"
+        for g in games
+    ]
+    idx = st.sidebar.selectbox(
+        "Game",
+        range(len(options)),
+        format_func=lambda i: options[i],
+    )
+    return sel_date, games, games[idx] if 0 <= idx < len(games) else None
+
+
+def render_news(news: list[NewsItem], limit: int = 10) -> None:
+    for item in news[:limit]:
+        with st.container():
+            st.markdown(f"**[{item.title}]({item.link})**")
+            if item.published:
+                st.caption(item.published)
+            if item.summary:
+                st.markdown(item.summary[:400] + ("..." if len(item.summary) > 400 else ""))
+            st.divider()
+
+
+def main() -> None:
+    st.title("Hockey Matchup: News vs Odds")
+    st.caption("Lineups, health, news, and betting odds in one place.")
+
+    sel_date, all_games, game = render_sidebar()
+    if not game:
+        st.info("Choose a date with games in the sidebar.")
+        return
+
+    # Multi-game view toggle
+    view_all = st.checkbox("View all games tonight", value=False, key="view_all_games")
+    if view_all and len(all_games) > 1:
+        st.markdown("### All games tonight")
+        for i, g in enumerate(all_games):
+            with st.expander(f"{g.away_team.name} @ {g.home_team.name} — {g.venue}"):
+                st.caption(f"{g.date} · {g.state}")
+                st.write("Select a single game in the sidebar to see full insights, lineups, and odds.")
+        st.divider()
+
+    # Fetch data
+    game_date = _parse_game_date(game.date)
+    with st.spinner("Loading matchup data…"):
+        rest_ctx = get_rest_context(game_date, game.home_team.id, game.away_team.id)
+        pp_pk = get_team_pp_pk()
+        home_roster, away_roster = get_rosters_for_matchup(
+            game.home_team,
+            game.away_team,
+        )
+        odds_list, odds_error = fetch_nhl_odds(
+            api_key=st.session_state.get("odds_api_key"),
+        )
+        game_odds = match_odds_to_game(
+            odds_list,
+            game.home_team.name,
+            game.away_team.name,
+        ) if odds_list else None
+        all_news = fetch_nhl_news()
+        matchup_news = filter_news_for_matchup(
+            all_news,
+            game.home_team.name,
+            game.away_team.name,
+            limit=15,
+        )
+        insights = build_comparison_summary(
+            game, home_roster, away_roster, game_odds,
+            rest_context=rest_ctx,
+            pp_pk_by_team=pp_pk,
+        )
+        best_bet, edge_confidence = get_best_bet_and_confidence(
+            game, home_roster, away_roster, game_odds, rest_context=rest_ctx
+        )
+
+    # Header: matchup and time
+    st.subheader(f"{game.away_team.name} @ {game.home_team.name}")
+    st.caption(f"{game.date} · {game.venue} · {game.state}")
+    # Rest/travel one-liner
+    rh, ra = rest_ctx.get("home"), rest_ctx.get("away")
+    if rh and ra:
+        parts = []
+        if rh.days_rest != 999:
+            parts.append(f"{game.home_team.abbreviation} {rh.days_rest}d rest" + (" (B2B)" if rh.back_to_back else ""))
+        if ra.days_rest != 999:
+            parts.append(f"{game.away_team.abbreviation} {ra.days_rest}d rest" + (" (B2B)" if ra.back_to_back else ""))
+        if ra.traveled_from:
+            parts.append(f"Away flew in from {ra.traveled_from}")
+        if rh.traveled_from:
+            parts.append(f"Home flew in from {rh.traveled_from}")
+        if parts:
+            st.caption(" · ".join(parts))
+
+    # Metrics row: roster health
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric(
+            f"{game.home_team.name} active",
+            len(home_roster.players),
+            delta=f"{len(home_roster.scratches)} not active" if home_roster.scratches else None,
+        )
+    with col2:
+        st.metric(
+            f"{game.away_team.name} active",
+            len(away_roster.players),
+            delta=f"{len(away_roster.scratches)} not active" if away_roster.scratches else None,
+        )
+    with col3:
+        if game_odds and game_odds.bookmakers:
+            bm = game_odds.bookmakers[0]
+            h2h = next((m for m in bm.get("markets", []) if m.get("key") == "h2h"), None)
+            if h2h:
+                parts = [f"{o['name']}: {o.get('price')}" for o in h2h.get("outcomes", [])]
+                st.metric("Moneyline", " · ".join(parts) if parts else "—", delta=None)
+            else:
+                st.metric("Odds", "Available", delta=odds_error or None)
+        else:
+            st.metric("Odds", "—", delta=odds_error)
+    with col4:
+        st.metric("Relevant news", len(matchup_news), delta=None)
+
+    # Tabs: Insights | Lineups | News | Odds
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Insights", "Lineups", "News", "Odds", "Export"])
+
+    with tab1:
+        st.markdown("### Comparison: lineup, rest & standings vs odds")
+        # Confidence meter
+        conf_color = {"high": "#4caf50", "medium": "#ff9800", "low": "#9e9e9e"}.get(edge_confidence, "#9e9e9e")
+        st.markdown(
+            f'<div style="background:#262730;border-radius:8px;padding:0.5rem 1rem;margin-bottom:1rem;">'
+            f'<span style="color:#b0b0b0;">Edge confidence</span> '
+            f'<span style="color:{conf_color};font-weight:bold;">{edge_confidence.upper()}</span>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+        # Best bet
+        st.markdown(f"**Best bet** · {best_bet}")
+        st.divider()
+        for ins in insights:
+            css = f"insight-{ins.sentiment}" if ins.sentiment != "neutral" else ""
+            conf_badge = getattr(ins, "confidence", "medium")
+            conf_c = {"high": "#4caf50", "medium": "#ff9800", "low": "#9e9e9e"}.get(conf_badge, "")
+            badge = f'<span style="font-size:0.75rem;color:{conf_c};">[{conf_badge}]</span>' if conf_c else ""
+            st.markdown(
+                f'<div class="matchup-card {css}"><strong>{ins.title}</strong> {badge}<br>{ins.body}</div>',
+                unsafe_allow_html=True,
+            )
+        if not insights:
+            st.info("No insights yet. Odds and roster data will appear here.")
+        # Placeholders for future data (see DATA_SOURCES.md)
+        with st.expander("More context (coming soon)"):
+            st.markdown("- **Referee** — Assignment and penalty tendencies (see DATA_SOURCES.md)")
+            st.markdown("- **Public % vs sharp** — Betting splits (OddsJam, SharpAPI)")
+            st.markdown("- **Reverse line movement** — Odds move vs public %")
+            st.markdown("- **ATS record** — Historical against-the-spread (StatSharp or Odds API historical)")
+            st.markdown("- **Situational trends** — e.g. home underdog record")
+
+    with tab2:
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown(f"#### {game.home_team.name}")
+            st.markdown("**Active roster**")
+            for p in home_roster.players:
+                st.text(f"#{p.jersey_number or '—'} {p.name} ({p.position})")
+            if home_roster.scratches:
+                st.markdown("**Not active**")
+                for p in home_roster.scratches:
+                    st.text(f"{p.name} ({p.position}) — status: {p.roster_status}")
+        with c2:
+            st.markdown(f"#### {game.away_team.name}")
+            st.markdown("**Active roster**")
+            for p in away_roster.players:
+                st.text(f"#{p.jersey_number or '—'} {p.name} ({p.position})")
+            if away_roster.scratches:
+                st.markdown("**Not active**")
+                for p in away_roster.scratches:
+                    st.text(f"{p.name} ({p.position}) — status: {p.roster_status}")
+
+    with tab3:
+        st.markdown("### News mentioning either team")
+        render_news(matchup_news)
+
+    with tab4:
+        if game_odds and game_odds.bookmakers:
+            st.markdown("### Odds by book")
+            for bm in game_odds.bookmakers:
+                st.markdown(f"**{bm.get('title', 'Book')}**")
+                for market in bm.get("markets", []):
+                    key = market.get("key", "")
+                    name = {"h2h": "Moneyline", "spreads": "Spread", "totals": "Total"}.get(key, key)
+                    st.markdown(f"*{name}*")
+                    for o in market.get("outcomes", []):
+                        st.text(f"  {o.get('name')}: {o.get('price')} {o.get('point', '')}".strip())
+                st.divider()
+        else:
+            st.warning(odds_error or "Odds not available. Add ODDS_API_KEY to .env for live odds.")
+
+    with tab5:
+        st.markdown("### Export pre-game notes")
+        report_lines = [
+            f"# {game.away_team.name} @ {game.home_team.name}",
+            f"**Date:** {game.date} · **Venue:** {game.venue}",
+            "",
+            "## Rest & travel",
+        ]
+        if rh and ra:
+            report_lines.append(f"- {game.home_team.name}: {rh.days_rest}d rest" + (" (back-to-back)" if rh.back_to_back else ""))
+            report_lines.append(f"- {game.away_team.name}: {ra.days_rest}d rest" + (" (back-to-back)" if ra.back_to_back else ""))
+            if ra.traveled_from:
+                report_lines.append(f"- Away traveled from {ra.traveled_from}")
+            if rh.traveled_from:
+                report_lines.append(f"- Home traveled from {rh.traveled_from}")
+        report_lines.extend(["", "## Best bet", best_bet, "", "## Insights"])
+        for ins in insights:
+            report_lines.append(f"- **{ins.title}** — {ins.body}")
+        report_lines.extend(["", "## Odds"])
+        if game_odds and game_odds.bookmakers:
+            for bm in game_odds.bookmakers[:3]:
+                report_lines.append(f"**{bm.get('title')}**")
+                for m in bm.get("markets", []):
+                    for o in m.get("outcomes", []):
+                        report_lines.append(f"  {o.get('name')}: {o.get('price')}")
+        report = "\n".join(report_lines)
+        st.download_button(
+            "Download report (Markdown)",
+            data=report,
+            file_name=f"matchup-{game.date}-{game.away_team.abbreviation}-at-{game.home_team.abbreviation}.md",
+            mime="text/markdown",
+        )
+        st.caption("Open in any text editor or paste into a doc; use Print → Save as PDF for a PDF.")
+
+
+if __name__ == "__main__":
+    main()

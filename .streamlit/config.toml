@@ -1,0 +1,6 @@
+# Skip first-run email prompt when running in terminal/background
+[browser]
+gatherUsageStats = false
+
+[server]
+headless = true
