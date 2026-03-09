@@ -4,3 +4,11 @@ gatherUsageStats = false
 
 [server]
 headless = true
+
+# Sidebar – darker gray
+[theme]
+primaryColor = "#4a9eff"
+
+[theme.sidebar]
+backgroundColor = "#15181d"
+secondaryBackgroundColor = "#1e2128"

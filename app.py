@@ -2,6 +2,13 @@
 Bettin Jimmy: news, lineups, and betting odds comparison.
 Pick a game, see who's healthy, recent news, and how odds compare to the narrative.
 """
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+# Load .env before config so ODDS_API_KEY is available
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
 from datetime import date, datetime, timedelta
 
 import streamlit as st
@@ -20,7 +27,40 @@ from nhl_client import (
     get_schedule,
     get_team_pp_pk,
 )
-from odds_client import fetch_nhl_odds, match_odds_to_game
+from config import ODDS_API_KEY
+from odds_client import fetch_nhl_odds, find_hedge_opportunities, match_odds_to_game
+
+
+def _read_odds_key_from_env() -> str:
+    """Read ODDS_API_KEY from config or by parsing .env file (no session state)."""
+    key = (ODDS_API_KEY or "").strip()
+    if key:
+        return key
+    for base in [Path(__file__).resolve().parent, Path.cwd()]:
+        env_path = base / ".env"
+        if env_path.exists():
+            try:
+                text = env_path.read_text(encoding="utf-8-sig", errors="ignore")
+            except Exception:
+                continue
+            for line in text.splitlines():
+                line = line.strip()
+                if line.startswith("ODDS_API_KEY="):
+                    val = line.split("=", 1)[1].strip()
+                    if "#" in val:
+                        val = val.split("#", 1)[0].strip()
+                    val = val.strip('"').strip("'")
+                    if val:
+                        return val
+    return ""
+
+
+def _get_odds_api_key() -> str:
+    """Odds API key: sidebar override, then .env/config."""
+    key = (st.session_state.get("odds_api_key") or "").strip()
+    if key:
+        return key
+    return _read_odds_key_from_env()
 
 st.set_page_config(
     page_title="Bettin Jimmy",
@@ -33,6 +73,12 @@ st.set_page_config(
 st.markdown("""
 <style>
     .stApp { background: linear-gradient(180deg, #0e1117 0%, #1a1d24 100%); }
+    /* Top bar – deep blue */
+    header[data-testid="stHeader"], .stApp > header { background: #0a1628 !important; }
+    [data-testid="stToolbar"], [data-testid="stDecoration"] { background: #0a1628 !important; }
+    /* Left sidebar – darker gray */
+    section[data-testid="stSidebar"] > div, [data-testid="stSidebar"] { background: #15181d !important; }
+    section[data-testid="stSidebar"] .stMarkdown { color: #e0e0e0 !important; }
     h1 { color: #f5f5f5; font-weight: 700; }
     h2, h3, h4 { color: #e8e8e8; }
     p, label, div[data-testid="stMarkdown"] { color: #e0e0e0 !important; }
@@ -81,6 +127,9 @@ def _parse_game_date(game_date: str) -> date:
 
 def render_sidebar() -> tuple[date, list[Game], Game | None]:
     """Date picker and game selector. Returns (selected_date, all_games_that_day, selected_game)."""
+    # Pre-fill odds key from .env on first load so odds work without typing in sidebar
+    if "odds_api_key" not in st.session_state:
+        st.session_state["odds_api_key"] = _read_odds_key_from_env()
     st.sidebar.header("🏒 Select matchup")
     st.sidebar.caption("Odds API key (optional)")
     odds_key = st.sidebar.text_input(
@@ -161,14 +210,18 @@ def main() -> None:
             game.home_team,
             game.away_team,
         )
-        odds_list, odds_error = fetch_nhl_odds(
-            api_key=st.session_state.get("odds_api_key"),
-        )
+        api_key = _get_odds_api_key().strip()
+        odds_list, odds_error = fetch_nhl_odds(api_key=api_key or None)
         game_odds = match_odds_to_game(
             odds_list,
             game.home_team.name,
             game.away_team.name,
         ) if odds_list else None
+        if odds_list and not game_odds:
+            odds_error = (
+                f"Odds API returned {len(odds_list)} game(s) but none matched this matchup "
+                f"({game.home_team.name} vs {game.away_team.name}). Team names may differ slightly."
+            )
         all_news = fetch_nhl_news()
         matchup_news = filter_news_for_matchup(
             all_news,
@@ -374,6 +427,27 @@ def main() -> None:
 
     with tab4:
         if game_odds and game_odds.bookmakers:
+            hedges = find_hedge_opportunities(game_odds)
+            st.markdown("### 🛡️ Hedge opportunities (pays either way)")
+            st.caption("Bet home at one book and away at another for guaranteed profit. Stake split locks in the same return either outcome.")
+            if hedges:
+                best = hedges[0]
+                st.success(
+                    f"**Best:** {best['book_home']} (home @ {best['home_odds']:.2f}) + {best['book_away']} (away @ {best['away_odds']:.2f}) "
+                    f"→ **{best['profit_pct']:.2f}%** profit · Stake {best['stake_pct_home']:.1f}% / {best['stake_pct_away']:.1f}%"
+                )
+                if len(hedges) > 1:
+                    with st.expander(f"All {len(hedges)} hedge(s)"):
+                        for h in hedges:
+                            st.markdown(
+                                f"**{h['book_home']}** (home @ {h['home_odds']:.2f}) + **{h['book_away']}** (away @ {h['away_odds']:.2f}) "
+                                f"→ **{h['profit_pct']:.2f}%** profit"
+                            )
+                            st.caption(f"Stake {h['stake_pct_home']:.1f}% on home, {h['stake_pct_away']:.1f}% on away.")
+                st.divider()
+            else:
+                st.info("No hedge found for this game — implied odds across books don’t leave a guaranteed profit. Check back as lines move.")
+                st.divider()
             st.markdown("### Odds by book")
             for bm in game_odds.bookmakers:
                 st.markdown(f"**{bm.get('title', 'Book')}**")
@@ -385,7 +459,12 @@ def main() -> None:
                         st.text(f"  {o.get('name')}: {o.get('price')} {o.get('point', '')}".strip())
                 st.divider()
         else:
-            st.warning(odds_error or "Odds not available. Add ODDS_API_KEY to .env for live odds.")
+            msg = odds_error or "Odds not available. Add ODDS_API_KEY to .env for live odds."
+            st.warning(msg)
+            if api_key and "Invalid" in (odds_error or ""):
+                st.caption("Your key may be invalid or expired. Check the-odds-api.com and try a new key in the sidebar.")
+            elif api_key and "rate limit" in (odds_error or "").lower():
+                st.caption("Free tier allows 500 requests/month. Try again later.")
 
     with tab5:
         st.markdown("### Export pre-game notes")
