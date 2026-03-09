@@ -1,5 +1,5 @@
 """
-Hockey Matchup: news, lineups, and betting odds comparison.
+Bettin Jimmy: news, lineups, and betting odds comparison.
 Pick a game, see who's healthy, recent news, and how odds compare to the narrative.
 """
 from datetime import date, datetime, timedelta
@@ -13,6 +13,8 @@ from analysis import (
 from news_client import NewsItem, fetch_nhl_news, filter_news_for_matchup
 from nhl_client import (
     Game,
+    get_player_landing,
+    get_player_stats_vs_opponents,
     get_rest_context,
     get_rosters_for_matchup,
     get_schedule,
@@ -21,32 +23,52 @@ from nhl_client import (
 from odds_client import fetch_nhl_odds, match_odds_to_game
 
 st.set_page_config(
-    page_title="Hockey Matchup | News vs Odds",
+    page_title="Bettin Jimmy",
     page_icon="🏒",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# Light styling: hockey feel without being loud
+# Light styling: hockey feel with bright, readable text
 st.markdown("""
 <style>
     .stApp { background: linear-gradient(180deg, #0e1117 0%, #1a1d24 100%); }
-    h1 { color: #e0e0e0; font-weight: 700; }
-    h2, h3 { color: #b0b0b0; }
+    h1 { color: #f5f5f5; font-weight: 700; }
+    h2, h3, h4 { color: #e8e8e8; }
+    p, label, div[data-testid="stMarkdown"] { color: #e0e0e0 !important; }
+    .stMarkdown p, .stMarkdown li { color: #e0e0e0 !important; }
+    .stCaptionContainer { color: #c8c8c8 !important; }
     .matchup-card {
         background: #262730;
         border-radius: 12px;
         padding: 1rem 1.25rem;
         margin: 0.5rem 0;
         border-left: 4px solid #4a9eff;
+        color: #e0e0e0 !important;
     }
     .insight-favor-home { border-left-color: #4caf50; }
     .insight-favor-away { border-left-color: #ff9800; }
     .insight-caution { border-left-color: #f44336; }
-    .news-item { background: #1e2128; border-radius: 8px; padding: 0.75rem 1rem; margin: 0.4rem 0; }
+    .news-item { background: #1e2128; border-radius: 8px; padding: 0.75rem 1rem; margin: 0.4rem 0; color: #e0e0e0; }
     div[data-testid="stMetric"] { background: #262730; padding: 0.5rem 1rem; border-radius: 8px; }
+    div[data-testid="stMetric"] label { color: #c8c8c8 !important; }
+    div[data-testid="stMetric"] [data-testid="stMetricValue"] { color: #ffffff !important; }
 </style>
 """, unsafe_allow_html=True)
+
+
+# NHL team primary colors (official/primary brand)
+TEAM_PRIMARY_COLORS = {
+    "ANA": "#F47A38", "ARI": "#8C2633", "ATL": "#041E42", "BOS": "#FFB81C",
+    "BUF": "#002654", "CGY": "#C8102E", "CAR": "#CC0000", "CHI": "#C8102E",
+    "COL": "#6F263D", "CBJ": "#002654", "DAL": "#006847", "DET": "#C8102E",
+    "EDM": "#FF4C00", "FLA": "#C8102E", "LAK": "#111111", "MIN": "#154734",
+    "MTL": "#AF1E2D", "NJD": "#CE1126", "NSH": "#FFB81C", "NYI": "#F47D30",
+    "NYR": "#0033A0", "OTT": "#C52032", "PHI": "#F74902", "PIT": "#000000",
+    "SJS": "#006D75", "SEA": "#001628", "STL": "#002F87", "TBL": "#002868",
+    "TOR": "#003E7E", "UTA": "#532E76", "VAN": "#00205B", "VGK": "#B4975A",
+    "WSH": "#C8102E", "WPG": "#041E42",
+}
 
 
 def _parse_game_date(game_date: str) -> date:
@@ -107,7 +129,7 @@ def render_news(news: list[NewsItem], limit: int = 10) -> None:
 
 
 def main() -> None:
-    st.title("Hockey Matchup: News vs Odds")
+    st.title("Bettin Jimmy")
     st.caption("Lineups, health, news, and betting odds in one place.")
 
     sel_date, all_games, game = render_sidebar()
@@ -124,6 +146,11 @@ def main() -> None:
                 st.caption(f"{g.date} · {g.state}")
                 st.write("Select a single game in the sidebar to see full insights, lineups, and odds.")
         st.divider()
+
+    # Clear selected player if game changed
+    if st.session_state.get("last_game_id") != game.id:
+        st.session_state.pop("selected_player", None)
+        st.session_state["last_game_id"] = game.id
 
     # Fetch data
     game_date = _parse_game_date(game.date)
@@ -241,21 +268,101 @@ def main() -> None:
             st.markdown("- **Situational trends** — e.g. home underdog record")
 
     with tab2:
+        # Initialize selected player in session state
+        if "selected_player" not in st.session_state:
+            st.session_state["selected_player"] = None
+
+        # Player stats panel - show at TOP when selected so it's visible without scrolling
+        sel = st.session_state.get("selected_player")
+        if sel:
+            pid, pname, opp_abbrevs, pos = sel
+            st.markdown("---")
+            st.markdown(f"### 📊 {pname} — stats vs opponent")
+            if st.button("← Back to roster", key="close_player_stats"):
+                st.session_state["selected_player"] = None
+                st.rerun()
+            with st.spinner(f"Loading {pname}'s stats…"):
+                landing = get_player_landing(pid)
+                vs_stats = get_player_stats_vs_opponents(pid, opp_abbrevs)
+            if landing:
+                fs = landing.get("featuredStats", {}) or {}
+                rs = (fs.get("regularSeason") or {}).get("subSeason") or fs.get("regularSeason", {}).get("career") or {}
+                if rs:
+                    st.markdown("**Season / career totals**")
+                    st.write(
+                        f"GP: {rs.get('gamesPlayed', '—')} · G: {rs.get('goals', '—')} · "
+                        f"A: {rs.get('assists', '—')} · Pts: {rs.get('points', '—')}"
+                    )
+            st.markdown("**Goals vs opponent team** (last 2 seasons)")
+            if vs_stats:
+                for abbrev, row in vs_stats.items():
+                    if row["games"] > 0:
+                        g, a, pts = row["goals"], row["assists"], row["points"]
+                        st.metric(
+                            f"vs {abbrev}",
+                            f"{g}G · {a}A · {pts}Pts in {row['games']} GP",
+                            f"{g / row['games']:.2f} goals/game" if row["games"] else None,
+                        )
+            else:
+                st.caption("No games vs this opponent in the last 2 seasons.")
+            st.markdown("**Goals vs opponent goalie**")
+            st.caption("Goalie-specific splits require play-by-play data. Coming in a future update.")
+            st.markdown("---")
+            st.markdown("#### Roster")
+
+        # Style player buttons with team primary colors
+        home_color = TEAM_PRIMARY_COLORS.get(game.home_team.abbreviation.upper(), "#4a9eff")
+        away_color = TEAM_PRIMARY_COLORS.get(game.away_team.abbreviation.upper(), "#ff9800")
+        st.markdown(f"""
+        <style>
+            div:has(#lineups-home-col) ~ * button,
+            div:has(#lineups-home-col) ~ * button[kind="primary"] {{
+                background-color: {home_color} !important;
+                border-color: {home_color} !important;
+                filter: brightness(1.5);
+            }}
+            div:has(#lineups-away-col) ~ * button,
+            div:has(#lineups-away-col) ~ * button[kind="primary"] {{
+                background-color: {away_color} !important;
+                border-color: {away_color} !important;
+                filter: brightness(1.5);
+            }}
+        </style>
+        """, unsafe_allow_html=True)
+
+        def _make_select_callback(pid: int, pname: str, opp_abbrevs: list[str], pos: str):
+            def _on_click():
+                st.session_state["selected_player"] = (pid, pname, opp_abbrevs, pos)
+            return _on_click
+
+        def _render_clickable_player(p, opponent_abbrevs: list[str], team_label: str) -> None:
+            key = f"player_btn_{p.id}_{team_label}"
+            label = f"#{p.jersey_number or '—'} {p.name} ({p.position})"
+            st.button(
+                label,
+                key=key,
+                help="Click to view stats vs opponent",
+                type="primary",
+                on_click=_make_select_callback(p.id, p.name, opponent_abbrevs, p.position),
+            )
+
         c1, c2 = st.columns(2)
         with c1:
             st.markdown(f"#### {game.home_team.name}")
-            st.markdown("**Active roster**")
+            st.markdown("**Active roster** — *click a name for stats vs opponent*")
+            st.markdown('<div id="lineups-home-col" style="display:none;"></div>', unsafe_allow_html=True)
             for p in home_roster.players:
-                st.text(f"#{p.jersey_number or '—'} {p.name} ({p.position})")
+                _render_clickable_player(p, [game.away_team.abbreviation], "home")
             if home_roster.scratches:
                 st.markdown("**Not active**")
                 for p in home_roster.scratches:
                     st.text(f"{p.name} ({p.position}) — status: {p.roster_status}")
         with c2:
             st.markdown(f"#### {game.away_team.name}")
-            st.markdown("**Active roster**")
+            st.markdown("**Active roster** — *click a name for stats vs opponent*")
+            st.markdown('<div id="lineups-away-col" style="display:none;"></div>', unsafe_allow_html=True)
             for p in away_roster.players:
-                st.text(f"#{p.jersey_number or '—'} {p.name} ({p.position})")
+                _render_clickable_player(p, [game.home_team.abbreviation], "away")
             if away_roster.scratches:
                 st.markdown("**Not active**")
                 for p in away_roster.scratches:

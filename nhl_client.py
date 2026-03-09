@@ -242,6 +242,58 @@ class RestContext:
     traveled_from: Optional[str]  # set if back-to-back and last game was away
 
 
+def get_player_landing(player_id: int) -> Optional[dict]:
+    """Fetch player landing page (info, featured stats, etc.)."""
+    data = _get(f"/player/{player_id}/landing")
+    return data if data else None
+
+
+def get_player_game_log(player_id: int, season_id: int = 20242025, game_type_id: int = 2) -> list[dict]:
+    """
+    Fetch player game log for a season.
+    Returns list of games with opponentAbbrev, goals, assists, points, etc.
+    """
+    data = _get(f"/player/{player_id}/game-log/{season_id}/{game_type_id}")
+    return data.get("gameLog", []) if data else []
+
+
+def get_player_stats_vs_opponents(
+    player_id: int,
+    opponent_abbrevs: list[str],
+    seasons: Optional[list[int]] = None,
+    game_type_id: int = 2,
+) -> dict[str, dict]:
+    """
+    Aggregate player stats vs specific opponent teams from game logs.
+    Returns {opponent_abbrev: {"games": N, "goals": N, "assists": N, "points": N, "season_id": last_season}}.
+    Uses last 2 seasons by default.
+    """
+    if seasons is None:
+        # Current and prior season (format: 20242025 = 2024-25)
+        from datetime import date
+        d = date.today()
+        y = d.year
+        current = (y - 1) * 10000 + y if d.month < 10 else y * 10000 + (y + 1)
+        prior = current - 10001
+        seasons = [current, prior]
+    abbrevs = {a.upper() for a in opponent_abbrevs if a}
+    out: dict[str, dict] = {abbrev: {"games": 0, "goals": 0, "assists": 0, "points": 0} for abbrev in abbrevs}
+    for season_id in seasons:
+        log = get_player_game_log(player_id, season_id, game_type_id)
+        for g in log:
+            opp = (g.get("opponentAbbrev") or "").upper()
+            if opp not in abbrevs:
+                continue
+            row = out.get(opp)
+            if not row:
+                out[opp] = {"games": 0, "goals": 0, "assists": 0, "points": 0}
+            out[opp]["games"] += 1
+            out[opp]["goals"] += g.get("goals", 0) or 0
+            out[opp]["assists"] += g.get("assists", 0) or 0
+            out[opp]["points"] += g.get("points", 0) or 0
+    return out
+
+
 def get_rest_context(
     game_date: date,
     home_team_id: int,
