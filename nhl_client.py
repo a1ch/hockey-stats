@@ -6,7 +6,7 @@ from typing import Optional
 
 import requests
 
-from config import NHL_API_BASE, NHL_STATS_REST_BASE
+from config import NHL_API_BASE, NHL_STATS_REST_BASE, current_season_id
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +38,12 @@ class Game:
     venue: str
     home_score: Optional[int] = None
     away_score: Optional[int] = None
+    game_state: str = ""      # FUT, PRE, LIVE, CRIT, FINAL, OFF
+    start_utc: str = ""
+
+    @property
+    def is_final(self) -> bool:
+        return self.game_state in ("FINAL", "OFF")
 
 
 @dataclass
@@ -89,6 +95,9 @@ def get_schedule(
         data = _get(f"/schedule/{current.isoformat()}")
         for week in data.get("gameWeek", []):
             day_date = week.get("date", current.isoformat())
+            # the endpoint returns a whole week; keep only the dates asked for
+            if not (start.isoformat() <= day_date <= end.isoformat()):
+                continue
             for g in week.get("games", []):
                 try:
                     home = g.get("homeTeam", {})
@@ -111,6 +120,8 @@ def get_schedule(
                             venue=venue_name,
                             home_score=home.get("score"),
                             away_score=away.get("score"),
+                            game_state=g.get("gameState", ""),
+                            start_utc=g.get("startTimeUTC", ""),
                         )
                     )
                 except (KeyError, TypeError) as e:
@@ -118,7 +129,7 @@ def get_schedule(
                     continue
         if current >= end:
             break
-        current = current + timedelta(days=1)
+        current = current + timedelta(days=7)  # each call already covered a week
     if team_id and games:
         games = [gm for gm in games if gm.home_team.id == team_id or gm.away_team.id == team_id]
     return games
@@ -199,11 +210,12 @@ def get_game_boxscore(game_id: int) -> Optional[dict]:
     return None
 
 
-def get_team_pp_pk(season_id: str = "20252026") -> dict[int, dict]:
+def get_team_pp_pk(season_id: Optional[str] = None) -> dict[int, dict]:
     """
     Fetch PP% and PK% for all teams from NHL Stats REST API.
     Returns dict[team_id, {"pp_pct": float, "pk_pct": float, "teamFullName": str}].
     """
+    season_id = season_id or current_season_id()
     url = f"{NHL_STATS_REST_BASE}/team/summary"
     params = {
         "sort": "powerPlayPct",

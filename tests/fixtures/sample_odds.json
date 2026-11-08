@@ -1,0 +1,2756 @@
+[
+ {
+  "id": "sample0",
+  "sport_key": "icehockey_nhl",
+  "commence_time": "2026-11-09T00:00:00Z",
+  "home_team": "Edmonton Oilers",
+  "away_team": "Calgary Flames",
+  "bookmakers": [
+   {
+    "key": "pinnacle",
+    "title": "Pinnacle",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 1.63
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 2.44
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 2.57,
+        "point": -1.5
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 1.57,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.01,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.9,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "draftkings",
+    "title": "DraftKings",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 1.62
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 2.34
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 2.59,
+        "point": -1.5
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 1.52,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.95,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.87,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "fanduel",
+    "title": "FanDuel",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 1.59
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 2.4
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 2.59,
+        "point": -1.5
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 1.52,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.98,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.85,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betmgm",
+    "title": "BetMGM",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 1.59
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 2.38
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 2.52,
+        "point": -1.5
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 1.53,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.01,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.81,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "caesars",
+    "title": "Caesars",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 1.62
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 2.32
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 2.52,
+        "point": -1.5
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 1.53,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.0,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.82,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betrivers",
+    "title": "BetRivers",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 1.57
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 2.95
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 2.55,
+        "point": -1.5
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 1.52,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.0,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.82,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "bet365",
+    "title": "bet365",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 1.59
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 2.41
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 2.51,
+        "point": -1.5
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 1.55,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.93,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.9,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betway",
+    "title": "Betway",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 1.59
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 2.37
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 2.58,
+        "point": -1.5
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 1.51,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.91,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.89,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "unibet_eu",
+    "title": "Unibet",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 1.57
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 2.44
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Edmonton Oilers",
+        "price": 2.58,
+        "point": -1.5
+       },
+       {
+        "name": "Calgary Flames",
+        "price": 1.52,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.99,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.84,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "sample1",
+  "sport_key": "icehockey_nhl",
+  "commence_time": "2026-11-09T01:00:00Z",
+  "home_team": "Toronto Maple Leafs",
+  "away_team": "Montreal Canadiens",
+  "bookmakers": [
+   {
+    "key": "pinnacle",
+    "title": "Pinnacle",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 1.71
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 2.27
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 2.79,
+        "point": -1.5
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 1.5,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.08,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.84,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "draftkings",
+    "title": "DraftKings",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 1.69
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 2.2
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 2.8,
+        "point": -1.5
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 1.46,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.01,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.83,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "fanduel",
+    "title": "FanDuel",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 1.67
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 2.24
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 2.76,
+        "point": -1.5
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 1.47,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.02,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.81,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betmgm",
+    "title": "BetMGM",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 1.67
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 2.22
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 2.81,
+        "point": -1.5
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 1.44,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.08,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.76,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "caesars",
+    "title": "Caesars",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 1.69
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 2.18
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 2.73,
+        "point": -1.5
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 1.46,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.01,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.81,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betrivers",
+    "title": "BetRivers",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 1.68
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 2.19
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 2.73,
+        "point": -1.5
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 1.46,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.02,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.8,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "bet365",
+    "title": "bet365",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 1.69
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 2.2
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 2.7,
+        "point": -1.5
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 1.48,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.01,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.83,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betway",
+    "title": "Betway",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 1.69
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 2.18
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 2.72,
+        "point": -1.5
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 1.47,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.02,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.8,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "unibet_eu",
+    "title": "Unibet",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 1.65
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 2.27
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Toronto Maple Leafs",
+        "price": 2.77,
+        "point": -1.5
+       },
+       {
+        "name": "Montreal Canadiens",
+        "price": 1.46,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.01,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.82,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "sample2",
+  "sport_key": "icehockey_nhl",
+  "commence_time": "2026-11-09T02:00:00Z",
+  "home_team": "Vegas Golden Knights",
+  "away_team": "Seattle Kraken",
+  "bookmakers": [
+   {
+    "key": "pinnacle",
+    "title": "Pinnacle",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 1.68
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 2.32
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 2.71,
+        "point": -1.5
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 1.52,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.81,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 2.11,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "draftkings",
+    "title": "DraftKings",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 1.68
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 2.23
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 2.61,
+        "point": -1.5
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 1.51,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.78,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 2.06,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "fanduel",
+    "title": "FanDuel",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 1.67
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 2.23
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 2.74,
+        "point": -1.5
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 1.47,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.78,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 2.07,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betmgm",
+    "title": "BetMGM",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 1.63
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 2.29
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 2.63,
+        "point": -1.5
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 1.49,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.75,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 2.09,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "caesars",
+    "title": "Caesars",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 1.62
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 2.32
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 2.61,
+        "point": -1.5
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 1.5,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.78,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 2.04,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betrivers",
+    "title": "BetRivers",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 1.64
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 2.28
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 2.65,
+        "point": -1.5
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 1.49,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.76,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 2.07,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "bet365",
+    "title": "bet365",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 1.63
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 2.32
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 2.66,
+        "point": -1.5
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 1.49,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.74,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 2.12,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betway",
+    "title": "Betway",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 1.63
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 2.29
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 2.61,
+        "point": -1.5
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 1.5,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.8,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 2.02,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "unibet_eu",
+    "title": "Unibet",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 1.64
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 2.3
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Vegas Golden Knights",
+        "price": 2.6,
+        "point": -1.5
+       },
+       {
+        "name": "Seattle Kraken",
+        "price": 1.51,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.74,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 2.13,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "sample3",
+  "sport_key": "icehockey_nhl",
+  "commence_time": "2026-11-09T00:00:00Z",
+  "home_team": "Colorado Avalanche",
+  "away_team": "Utah Mammoth",
+  "bookmakers": [
+   {
+    "key": "pinnacle",
+    "title": "Pinnacle",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 1.77
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 2.17
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 2.96,
+        "point": -1.5
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 1.46,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.02,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.89,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "draftkings",
+    "title": "DraftKings",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 1.75
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 2.11
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 3.0,
+        "point": -1.5
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 1.4,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.97,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.86,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "fanduel",
+    "title": "FanDuel",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 1.74
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 2.4
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 2.98,
+        "point": -1.5
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 1.41,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.02,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.82,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betmgm",
+    "title": "BetMGM",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 1.77
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 2.07
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 2.97,
+        "point": -1.5
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 1.4,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.95,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.86,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "caesars",
+    "title": "Caesars",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 1.85
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 2.09
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 2.81,
+        "point": -1.5
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 1.44,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.98,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.83,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betrivers",
+    "title": "BetRivers",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 1.76
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 2.07
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 2.88,
+        "point": -1.5
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 1.42,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.98,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.84,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "bet365",
+    "title": "bet365",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 1.71
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 2.17
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 2.83,
+        "point": -1.5
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 1.45,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.95,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.88,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betway",
+    "title": "Betway",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 1.75
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 2.09
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 2.92,
+        "point": -1.5
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 1.41,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.98,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.83,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "unibet_eu",
+    "title": "Unibet",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 1.71
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 2.17
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Colorado Avalanche",
+        "price": 2.98,
+        "point": -1.5
+       },
+       {
+        "name": "Utah Mammoth",
+        "price": 1.41,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.94,
+        "point": 6.5
+       },
+       {
+        "name": "Under",
+        "price": 1.89,
+        "point": 6.5
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "sample4",
+  "sport_key": "icehockey_nhl",
+  "commence_time": "2026-11-09T01:00:00Z",
+  "home_team": "Florida Panthers",
+  "away_team": "Boston Bruins",
+  "bookmakers": [
+   {
+    "key": "pinnacle",
+    "title": "Pinnacle",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 1.74
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 2.22
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 2.87,
+        "point": -1.5
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 1.48,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.06,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.86,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "draftkings",
+    "title": "DraftKings",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 1.73
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 2.14
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 2.82,
+        "point": -1.5
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 1.45,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.05,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.8,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "fanduel",
+    "title": "FanDuel",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 1.7
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 2.19
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 2.92,
+        "point": -1.5
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 1.42,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.04,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.8,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betmgm",
+    "title": "BetMGM",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 1.71
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 2.15
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 2.79,
+        "point": -1.5
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 1.45,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.02,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.8,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "caesars",
+    "title": "Caesars",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 1.67
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 2.22
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 2.8,
+        "point": -1.5
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 1.44,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.99,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.83,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betrivers",
+    "title": "BetRivers",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 1.69
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 2.18
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 2.89,
+        "point": -1.5
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 1.42,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.99,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.83,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "bet365",
+    "title": "bet365",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 1.68
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 2.22
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 2.74,
+        "point": -1.5
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 1.47,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 1.99,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 2.2,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betway",
+    "title": "Betway",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 1.68
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 2.2
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 2.82,
+        "point": -1.5
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 1.44,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.02,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.8,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "unibet_eu",
+    "title": "Unibet",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 1.74
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 2.13
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Florida Panthers",
+        "price": 2.9,
+        "point": -1.5
+       },
+       {
+        "name": "Boston Bruins",
+        "price": 1.43,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.0,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.83,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "sample5",
+  "sport_key": "icehockey_nhl",
+  "commence_time": "2026-11-09T02:00:00Z",
+  "home_team": "Winnipeg Jets",
+  "away_team": "Vancouver Canucks",
+  "bookmakers": [
+   {
+    "key": "pinnacle",
+    "title": "Pinnacle",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 1.84
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 2.08
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 3.15,
+        "point": -1.5
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.41,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.1,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.82,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "draftkings",
+    "title": "DraftKings",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 1.83
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 2.01
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 3.13,
+        "point": -1.5
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.38,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.09,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.76,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "fanduel",
+    "title": "FanDuel",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 1.84
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.99
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 3.17,
+        "point": -1.5
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.37,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.11,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.75,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betmgm",
+    "title": "BetMGM",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 1.83
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.99
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 3.19,
+        "point": -1.5
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.36,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.06,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.77,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "caesars",
+    "title": "Caesars",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 1.77
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 2.07
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 3.16,
+        "point": -1.5
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.36,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.03,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.79,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betrivers",
+    "title": "BetRivers",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 1.82
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 2.0
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 3.1,
+        "point": -1.5
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.37,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.06,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.77,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "bet365",
+    "title": "bet365",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 1.84
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 2.0
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 2.97,
+        "point": -1.5
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.41,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.02,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.82,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "betway",
+    "title": "Betway",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 1.8
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 2.02
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 3.17,
+        "point": -1.5
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.36,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.05,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.78,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "key": "unibet_eu",
+    "title": "Unibet",
+    "last_update": "2026-11-08T22:00:00Z",
+    "markets": [
+     {
+      "key": "h2h",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 1.84
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 2.0
+       }
+      ]
+     },
+     {
+      "key": "spreads",
+      "outcomes": [
+       {
+        "name": "Winnipeg Jets",
+        "price": 3.14,
+        "point": -1.5
+       },
+       {
+        "name": "Vancouver Canucks",
+        "price": 1.38,
+        "point": 1.5
+       }
+      ]
+     },
+     {
+      "key": "totals",
+      "outcomes": [
+       {
+        "name": "Over",
+        "price": 2.07,
+        "point": 5.5
+       },
+       {
+        "name": "Under",
+        "price": 1.78,
+        "point": 5.5
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+]

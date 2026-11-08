@@ -4,6 +4,22 @@ A Streamlit app that gathers **NHL matchup news**, **lineups/health**, and **bet
 
 ## Features
 
+### 🎯 Scanner (new)
+- **Every game tonight in one scan** across moneyline, totals and puck line.
+- **Hedges:** best price on each side at different books; when they add up to under 100% implied, it shows the stake split and locked-in profit for the amount you enter. Near misses (within 1%) are listed to watch.
+- **Edges (+EV):** each book's price vs the fair price (Pinnacle with its margin removed, or the no-vig consensus when Pinnacle isn't quoting). Shows edge %, fractional-Kelly stake on your bankroll, and the next best price. Click a row to log the bet.
+- **Line moves:** every odds pull is saved (no extra credits), so it flags markets whose fair price moved 3+ points and charts each book's line over time.
+- **My books:** pick the books you can actually use; edges and hedges only use those.
+- **Credit saver:** odds are reused for N minutes (default 10) instead of re-pulled on every click, and the remaining monthly credits are shown.
+- **Sample odds:** switch on in ⚙️ settings to try everything without a key.
+
+### 📒 Bets (new)
+- Log bets from the scanner or by hand. Results settle automatically from NHL final scores; P/L, ROI and a running chart.
+- **Closing-line value (CLV):** your price vs the fair price right before puck drop. The best early check that your edges are real.
+- Stored locally in `data/bets.csv` (git-ignored).
+
+### 🔍 Matchup
+
 - **Schedule** – Pick a date and select a game (today or upcoming).
 - **Rest & back-to-back** – Days rest for each team; back-to-back and “flew in from X” travel fatigue from schedule data.
 - **Multi-game view** – Check “View all games tonight” to see every game on the selected date at a glance.
@@ -44,6 +60,10 @@ A Streamlit app that gathers **NHL matchup news**, **lineups/health**, and **bet
    ```env
    ODDS_API_KEY=your_key_here
    ```
+
+   On Streamlit Community Cloud, add `ODDS_API_KEY` under the app's **Settings → Secrets** instead.
+
+   Credits: each refresh costs (markets × regions). The default `us` + `eu` with 3 markets is 6 credits, about 80 refreshes a month on the free tier.
 
    If you don’t set this, the app still runs; schedule, rosters, news, and insights will work, and odds will show a message to add the key.
 

@@ -28,7 +28,11 @@ from nhl_client import (
     get_team_pp_pk,
 )
 from config import ODDS_API_KEY
-from odds_client import fetch_nhl_odds, find_hedge_opportunities, match_odds_to_game
+from odds_client import find_hedge_opportunities, match_odds_to_game
+import scanner as sc
+import ui_bets
+import ui_scanner
+from ui_common import load_odds, render_settings_sidebar, settings
 
 
 def _read_odds_key_from_env() -> str:
@@ -127,22 +131,7 @@ def _parse_game_date(game_date: str) -> date:
 
 def render_sidebar() -> tuple[date, list[Game], Game | None]:
     """Date picker and game selector. Returns (selected_date, all_games_that_day, selected_game)."""
-    # Pre-fill odds key from .env on first load so odds work without typing in sidebar
-    if "odds_api_key" not in st.session_state:
-        st.session_state["odds_api_key"] = _read_odds_key_from_env()
     st.sidebar.header("🏒 Select matchup")
-    st.sidebar.caption("Odds API key (optional)")
-    odds_key = st.sidebar.text_input(
-        "Odds API key",
-        value=st.session_state.get("odds_api_key", ""),
-        type="password",
-        placeholder="Paste key from the-odds-api.com",
-        label_visibility="collapsed",
-    )
-    if odds_key is not None and odds_key.strip():
-        st.session_state["odds_api_key"] = odds_key.strip()
-    elif odds_key is not None and not odds_key.strip() and "odds_api_key" in st.session_state:
-        del st.session_state["odds_api_key"]
     today = date.today()
     sel_date = st.sidebar.date_input(
         "Game date",
@@ -178,10 +167,22 @@ def render_news(news: list[NewsItem], limit: int = 10) -> None:
 
 
 def main() -> None:
+    page = st.sidebar.radio("Bettin Jimmy", ["🎯 Scanner", "🔍 Matchup", "📒 Bets"], label_visibility="collapsed")
+    st.sidebar.divider()
+    if page == "🎯 Scanner":
+        ui_scanner.render()
+    elif page == "📒 Bets":
+        ui_bets.render()
+    else:
+        render_matchup()
+
+
+def render_matchup() -> None:
     st.title("Bettin Jimmy")
     st.caption("Lineups, health, news, and betting odds in one place.")
 
     sel_date, all_games, game = render_sidebar()
+    render_settings_sidebar([])
     if not game:
         st.info("Choose a date with games in the sidebar.")
         return
@@ -211,7 +212,7 @@ def main() -> None:
             game.away_team,
         )
         api_key = _get_odds_api_key().strip()
-        odds_list, odds_error = fetch_nhl_odds(api_key=api_key or None)
+        odds_list, odds_error, _ = load_odds()
         game_odds = match_odds_to_game(
             odds_list,
             game.home_team.name,
@@ -448,6 +449,16 @@ def main() -> None:
             else:
                 st.info("No hedge found for this game — implied odds across books don’t leave a guaranteed profit. Check back as lines move.")
                 st.divider()
+            mks = sc.build_markets([game_odds])
+            edges = sc.find_ev(mks, settings()["min_ev"], settings()["kelly"], settings()["max_price"])
+            st.markdown("### 💰 Prices that beat the fair line")
+            if edges:
+                for b in edges:
+                    st.markdown(f"**{b.pick}** ({b.market}) at **{b.book}** {b.american} vs fair {sc.to_american(b.fair_price)} "
+                                f"→ **+{b.ev_pct:.1f}%** edge")
+            else:
+                st.caption("None right now.")
+            st.divider()
             st.markdown("### Odds by book")
             for bm in game_odds.bookmakers:
                 st.markdown(f"**{bm.get('title', 'Book')}**")

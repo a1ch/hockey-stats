@@ -1,11 +1,13 @@
 """The Odds API client for NHL betting odds."""
+import json
 import logging
+import time
 from dataclasses import dataclass, field
 from typing import Any, Optional
 
 import requests
 
-from config import ODDS_API_BASE, ODDS_API_KEY
+from config import DATA_DIR, ODDS_API_BASE, ODDS_API_KEY
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +26,11 @@ class GameOdds:
     away_team: str
     commence_time: str
     bookmakers: list[dict] = field(default_factory=list)  # name + markets
+
+
+# Last known quota from response headers (The Odds API sends these on every call)
+QUOTA: dict = {"remaining": None, "used": None, "last_cost": None}
+CACHE_FILE = DATA_DIR / "odds_cache.json"
 
 
 def fetch_nhl_odds(
@@ -56,10 +63,17 @@ def fetch_nhl_odds(
             return [], "Odds API rate limit reached (free tier: 500 req/month)."
         r.raise_for_status()
         data = r.json()
+        for h, k in (("x-requests-remaining", "remaining"), ("x-requests-used", "used"), ("x-requests-last", "last_cost")):
+            if r.headers.get(h) is not None:
+                QUOTA[k] = r.headers.get(h)
     except requests.RequestException as e:
         logger.warning("Odds API request failed: %s", e)
         return [], str(e)
 
+    return parse_games(data), None
+
+
+def parse_games(data: list) -> list[GameOdds]:
     games: list[GameOdds] = []
     for g in data:
         try:
@@ -74,7 +88,78 @@ def fetch_nhl_odds(
             )
         except (KeyError, TypeError):
             continue
-    return games, None
+    return games
+
+
+def fetch_nhl_odds_cached(
+    regions: str = "us",
+    markets: str = "h2h,spreads,totals",
+    api_key: Optional[str] = None,
+    max_age_s: int = 600,
+    force: bool = False,
+) -> tuple[list[GameOdds], Optional[str], float]:
+    """
+    Same as fetch_nhl_odds but reuses a saved copy for max_age_s seconds, so clicking
+    around the app doesn't burn your monthly quota. Every fresh pull is also saved
+    as a snapshot for line-movement history. Returns (games, error, fetched_at epoch).
+    Each fresh pull costs (number of markets x number of regions) credits.
+    """
+    cache_key = f"{regions}|{markets}"
+    cache: dict = {}
+    if CACHE_FILE.exists():
+        try:
+            cache = json.loads(CACHE_FILE.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            cache = {}
+    hit = cache.get(cache_key)
+    if hit and not force and time.time() - hit.get("at", 0) < max_age_s:
+        QUOTA.update(hit.get("quota") or {})
+        return parse_games(hit["data"]), None, hit["at"]
+
+    key = ((api_key or "").strip() or (ODDS_API_KEY or "").strip()) or ""
+    if not key:
+        if hit:  # no key but we have old data: show it
+            return parse_games(hit["data"]), "No API key set; showing the last saved odds.", hit["at"]
+        return [], "Set your Odds API key in the sidebar or in .env (get a free key at https://the-odds-api.com/)", 0.0
+    try:
+        r = requests.get(
+            f"{ODDS_API_BASE}/sports/icehockey_nhl/odds",
+            params={"apiKey": key, "regions": regions, "markets": markets, "oddsFormat": "decimal"},
+            timeout=20,
+        )
+        if r.status_code == 401:
+            return [], "Invalid ODDS_API_KEY. Check your key at the-odds-api.com.", 0.0
+        if r.status_code == 429 or (r.status_code == 422 and "quota" in r.text.lower()):
+            if hit:
+                return parse_games(hit["data"]), "Out of Odds API credits this month; showing the last saved odds.", hit["at"]
+            return [], "Odds API quota used up for this month.", 0.0
+        r.raise_for_status()
+        data = r.json()
+    except requests.RequestException as e:
+        logger.warning("Odds API request failed: %s", e)
+        if hit:
+            return parse_games(hit["data"]), f"Odds API unreachable ({e}); showing the last saved odds.", hit["at"]
+        return [], str(e), 0.0
+    for h, k in (("x-requests-remaining", "remaining"), ("x-requests-used", "used"), ("x-requests-last", "last_cost")):
+        if r.headers.get(h) is not None:
+            QUOTA[k] = r.headers.get(h)
+    now = time.time()
+    cache[cache_key] = {"at": now, "data": data, "quota": dict(QUOTA)}
+    try:
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        CACHE_FILE.write_text(json.dumps(cache), encoding="utf-8")
+        from history import save_snapshot
+        save_snapshot(data, now)
+    except OSError as e:
+        logger.warning("Could not save odds cache: %s", e)
+    return parse_games(data), None, now
+
+
+def _norm(name: Optional[str]) -> str:
+    """Lowercase, strip accents and dots so 'Montréal Canadiens' matches 'Montreal Canadiens'."""
+    import unicodedata
+    n = unicodedata.normalize("NFKD", name or "").encode("ascii", "ignore").decode()
+    return n.lower().replace(".", "").strip()
 
 
 def match_odds_to_game(
@@ -83,12 +168,12 @@ def match_odds_to_game(
     away_team_name: str,
 ) -> Optional[GameOdds]:
     """Find odds for a matchup by team names (flexible match)."""
-    home_lower = (home_team_name or "").lower()
-    away_lower = (away_team_name or "").lower()
+    home_lower = _norm(home_team_name)
+    away_lower = _norm(away_team_name)
     # API often uses "Team Name" or "City Name" - match on partial
     for o in odds_list:
-        o_h = (o.home_team or "").lower()
-        o_a = (o.away_team or "").lower()
+        o_h = _norm(o.home_team)
+        o_a = _norm(o.away_team)
         if (home_lower in o_h or o_h in home_lower) and (
             away_lower in o_a or o_a in away_lower
         ):
