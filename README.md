@@ -105,3 +105,12 @@ Then open **http://localhost:8501** in your browser.
 - **Roster status** comes from the NHL API `rosterStatus` (e.g. Y = active, I = injured). The “not active” list is everyone not on the active roster for that team.
 - **Odds** are matched to games by team name; small naming differences between NHL and Odds API are handled with flexible matching.
 - This app is for informational use only; it does not provide betting advice.
+
+## Hosted copy (Azure)
+
+Runs on Azure Container Apps in the Ingot sponsorship subscription (rg-bettinjimmy, Canada Central): https://bettinjimmy.proudflower-c4960394.canadacentral.azurecontainerapps.io
+
+- Scales to zero when nobody is using it, so it costs pennies a month (a small Azure Files share holds bets, line history and settings). The first load after it's been idle takes about a minute.
+- The container pulls `main` from GitHub when it starts. To ship changes: commit, then `.\deploy.ps1` (pushes and restarts it).
+- `.\set-secrets.ps1` sets the Odds API key and the site password (it prompts; nothing is saved).
+
