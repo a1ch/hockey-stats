@@ -27,7 +27,7 @@ from nhl_client import (
     get_schedule,
     get_team_pp_pk,
 )
-from config import ODDS_API_KEY
+from config import APP_PASSWORD, ODDS_API_KEY, ON_AZURE
 from odds_client import find_hedge_opportunities, match_odds_to_game
 import scanner as sc
 import ui_bets
@@ -166,7 +166,29 @@ def render_news(news: list[NewsItem], limit: int = 10) -> None:
             st.divider()
 
 
+def _unlocked() -> bool:
+    """Password gate for the hosted copy. Locally with no APP_PASSWORD it's open."""
+    if not APP_PASSWORD:
+        if ON_AZURE:
+            st.error("Locked: set the APP_PASSWORD app setting in Azure first.")
+            return False
+        return True
+    if st.session_state.get("unlocked"):
+        return True
+    st.title("🏒 Bettin Jimmy")
+    pw = st.text_input("Password", type="password")
+    if pw:
+        import hmac
+        if hmac.compare_digest(pw, APP_PASSWORD):
+            st.session_state["unlocked"] = True
+            st.rerun()
+        st.error("Wrong password.")
+    return False
+
+
 def main() -> None:
+    if not _unlocked():
+        return
     page = st.sidebar.radio("Bettin Jimmy", ["🎯 Scanner", "🔍 Matchup", "📒 Bets"], label_visibility="collapsed")
     st.sidebar.divider()
     if page == "🎯 Scanner":
