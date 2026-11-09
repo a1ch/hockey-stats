@@ -1,8 +1,9 @@
-# Deploys the committed code to Azure App Service (Ingot sponsorship sub, free F1 plan).
-# Run from this folder:  .\deploy.ps1
+# Bettin Jimmy on Azure Container Apps (Ingot sponsorship sub). The container pulls
+# main from GitHub when it starts, so: commit + push, then run this to restart it.
 $ErrorActionPreference = "Stop"
-$sub = "Microsoft Azure Sponsorship"; $rg = "rg-bettinjimmy"; $app = "bettinjimmy-a1ch"
-$zip = Join-Path $env:TEMP "bettinjimmy.zip"
-git archive --format zip -o $zip HEAD
-az webapp deploy --subscription $sub -g $rg -n $app --src-path $zip --type zip --async true -o none
-Write-Host "Deployed. https://$app.azurewebsites.net (first load after it's been idle takes about a minute)"
+$sub = "Microsoft Azure Sponsorship"; $rg = "rg-bettinjimmy"; $app = "bettinjimmy"
+git push
+$rev = az containerapp revision list --subscription $sub -g $rg -n $app --query "[?properties.active].name | [0]" -o tsv
+az containerapp revision restart --subscription $sub -g $rg -n $app --revision $rev -o none
+$fqdn = az containerapp show --subscription $sub -g $rg -n $app --query properties.configuration.ingress.fqdn -o tsv
+Write-Host "Restarted. https://$fqdn (first load after it's been idle takes about a minute)"
