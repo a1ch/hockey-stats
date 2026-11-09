@@ -31,7 +31,7 @@ def _secret(name: str) -> str:
 ODDS_API_KEY = _secret("ODDS_API_KEY")
 # If set, the app asks for this password before showing anything (needed when it's on the internet)
 APP_PASSWORD = _secret("APP_PASSWORD")
-ON_AZURE = bool(os.getenv("WEBSITE_SITE_NAME"))
+ON_AZURE = bool(os.getenv("WEBSITE_SITE_NAME") or os.getenv("CONTAINER_APP_NAME"))
 ODDS_API_BASE = "https://api.the-odds-api.com/v4"
 
 # NHL news RSS (team-agnostic and team-specific available)
